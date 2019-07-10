@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home Page</title>
+
+</head>
+<body>
+<div class="container">
+<!--/*@thymesVar id="User" type="com.model.User"*/-->
+
+<h2>Hello</h2>
+<div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
+
+
+</table>
+
+</div>
+</body>
+</html>

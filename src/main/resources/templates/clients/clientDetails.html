@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+
+<body>
+<!--/*thymesBar id="Client" type="timezone.demo.model.Client"*/-->
+<h2>Client Information</h2>
+<!--<span th:object="${session.user}"> </span>
+<span><p>Hello: <span th:text="*{user.firstName}">Pepper</span></p></span>-->
+
+
+<table class="table table-striped" th:object="${client}">
+    <tr>
+        <th>Company Name</th>
+        <td><b th:text="*{companyName}"></b></td>
+    </tr>
+    <tr>
+        <th>Address</th>
+        <td th:text="*{address}" /></td>
+    </tr>
+    <tr>
+        <th>City</th>
+        <td th:text="*{city}" /></td>
+    </tr>
+    <tr>
+        <th>Telephone</th>
+        <td th:text="*{telephone}" /></td>
+    </tr>
+
+    <tr>
+        <th>TimeZone</th>
+        <td th:text="*{timeZone.getDisplayName()}" /></td>
+    </tr>
+
+
+</table>
+
+<a th:href="@{{id}/edit(id=${client.id})}" class="btn btn-default">Edit
+    My Details</a>
+
+<br />
+<br />
+<br />
+
+
+</body>
+
+</html>

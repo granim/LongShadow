@@ -1,0 +1,99 @@
+<!doctype html>
+<html th:fragment="layout (template, menu)"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.w3.org/1999/xhtml">
+
+  <head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{images/favicon.png}">
+
+    <title>TimeZone :: a Spring Framework Web Application</title>
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+     <script rel="script" th:href="@{/js/bootstrap.js}"></script>
+      <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  </head>
+
+<body class="container">
+<div sec:authorize="isAuthenticated()">Authenticated as <span class="small" sec:authentication="name"></span></div>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between" role="navigation">
+      <a class="navbar-brand" href="/index">TimeZones</a>
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav" ria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">Toggle navigation</span>
+              </button>
+          </div>
+          <div class="navbar-collapse collapse menu-bar" id="main-navbar">
+
+              <ul class="nav navbar-nav navbar-right">
+                  <li th:fragment="menuItem (path,active,title,glyph,text)"  th:class="${active==menu ? 'active' : ''}">
+                      <a  class="text-left nav-link" th:href="@{__${path}__}" th:title="${title}">
+                        <span th:class="'glyphicon  glyphicon-'+${glyph}" class="nav-item" aria-hidden="true"></span>
+                        <span th:text="${text}">Template</span>
+                      </a>
+                  </li>
+  
+                  <li class="nav-item" th:replace="::menuItem ('/','home','home page','home','Home')" >
+                      <span class="nav-link glyphicon glyphicon-search" aria-hidden="true"></span>
+                      <span>Home</span>
+                  </li>
+                  <li class="nav-item">
+                      <a  th:href=" @{'/users/' + |${#authentication.name}/edit|}" class="text-left nav-link">My Information</a>
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  </li>
+                  <li class="nav-item">
+                      <a th:href=" @{'/users/' + |${#authentication.name}/coworkers/find|}" class="text-left nav-link">My Coworkers</a>
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  </li>
+                  <li class="nav-item">
+                      <a th:href=" @{'/users/' + |${#authentication.name}/clients/find|}" class="text-left nav-link">My Clients</a>
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  </li>
+                  <li class="nav-item" sec:authorize="hasRole('ADMIN')" th:replace="::menuItem ('/oups','error','trigger a RuntimeException to see how it is handled','warning-sign','Error')">
+                      <span class="glyphicon glyphicon-warning-sign nav-link" aria-hidden="true"></span>
+                      <span>Error</span>
+                  </li>
+                  <li class="nav-item">
+                      <form class="form-inline" form-method="post" th:action="@{/logout}">
+                          <button sec:authorize="isAuthenticated()" class="btn btn-outline-danger my-2 my-sm-0 btn-sm nav-link" type="submit">Logout</button>
+                          <button sec:authorize="isAnonymous()" th:href="@{~/login}" class="btn btn-outline-info my-2 my-sm-0 btn-sm nav-link" type="submit">Login</button>
+                      </form>
+                  </li>
+                  <!--    <li sec:authorize="isAuthenticated()" th:replace="::menuItem ('/users/' + '2' + '/clients/find','clients','find clients','search','Find clients')">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                    <span>Find Clients</span>
+                                </li>
+                              <li sec:authorize="isAuthenticated()"  th:replace="::menuItem('/users/' + '2' + '/coworkers/find', 'coworkers', 'find coworkers', 'search', 'Find coworkers')">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                    <span>Find Coworkers</span>
+                                  </li>-->
+              </ul>
+          </div>
+      </div>
+  </nav>
+  <div class="container-fluid">
+      <div class="container xd-container">
+  
+          <th:block th:include="${template}"/>
+
+        <br/>
+        <br/>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+              <img th:src="@{/images/spring-pivotal-logo.png}"
+                alt="Sponsored by Pivotal"/></div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+</body>
+
+</html>
