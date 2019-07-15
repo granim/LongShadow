@@ -3,9 +3,18 @@ spring:
     url: jdbc:mysql://localhost:3306/ls_dev
     username: ls_dev_user
     password: pass
+    platform: mysql
   jpa:
     hibernate:
       ddl-auto: validate
-    database-platform: org.hibernate.dialect.MySql5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: mysql
     show-sql: true
+#    properties:
+#      javax:
+#        persistence:
+#          schema-generation:
+#            create-source: metadata
+#            scripts:
+#              action: create
+#              create-target: com_database_create.sql

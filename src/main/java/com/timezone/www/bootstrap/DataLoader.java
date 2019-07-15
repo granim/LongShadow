@@ -8,6 +8,7 @@ import com.timezone.www.services.ClientService;
 import com.timezone.www.services.CoworkerService;
 import com.timezone.www.services.UserService;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.TimeZone;
 
 @Component
+@Profile("default")
 public class DataLoader implements CommandLineRunner {
 
     private final ClientService clientService;
@@ -52,7 +54,7 @@ public class DataLoader implements CommandLineRunner {
         client1.setTelephone("123");
         client1.setCity("Tamps");
         client1.setAddress("234 Hulu");
-        client1.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+        client1.setTimeZone(TimeZone.getTimeZone("GMT"));
         client1.setUser(grant);
         clientService.save(client1);
         grant.addClient(client1);
@@ -62,7 +64,7 @@ public class DataLoader implements CommandLineRunner {
         client1.setTelephone("123534545");
         client1.setCity("Tamps 342");
         client1.setAddress("234 Hulu 243322");
-        client1.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+        client1.setTimeZone(TimeZone.getTimeZone("GMT"));
         client1.setUser(grant);
         clientService.save(client2);
         grant.addClient(client2);
