@@ -2,9 +2,12 @@ package com.timezone.www.services.springdatajpa;
 
 
 import com.timezone.www.model.Coworker;
+import com.timezone.www.model.User;
 import com.timezone.www.repository.CoworkerRepository;
+import com.timezone.www.repository.UserRepository;
 import com.timezone.www.services.CoworkerService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -13,9 +16,11 @@ import java.util.Set;
 public class CoworkerSDJpaService implements CoworkerService {
 
     private final CoworkerRepository coworkerRepository;
+    private final UserRepository userRepository;
 
-    public CoworkerSDJpaService(CoworkerRepository coworkerRepository) {
+    public CoworkerSDJpaService(CoworkerRepository coworkerRepository, UserRepository userRepository) {
         this.coworkerRepository = coworkerRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -47,6 +52,7 @@ public class CoworkerSDJpaService implements CoworkerService {
     }
 
     @Override
+    @Transactional
     public Coworker save(Coworker object) {
         return coworkerRepository.save(object);
     }

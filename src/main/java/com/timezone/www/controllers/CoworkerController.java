@@ -5,6 +5,7 @@ import com.timezone.www.model.User;
 import com.timezone.www.services.CoworkerService;
 import com.timezone.www.services.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -57,7 +58,7 @@ public class CoworkerController {
         if(coworker.getlName() == null) {
             coworker.setlName("");
         }
-        List<Coworker> coworkersByUserId = coworkerService.findAllByUserId(user.getId());
+        List<Coworker> coworkersByUserId = coworkerService.findAllByUserId(user.getid());
         List<Coworker> coworkeresults = coworkerService.findAllBylNameLike("%" + coworker.getlName() + "%");
         if(coworkeresults.isEmpty()) {
             result.rejectValue("lName", "notFound", "not found");

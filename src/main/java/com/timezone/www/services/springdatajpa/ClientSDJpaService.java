@@ -4,6 +4,7 @@ import com.timezone.www.model.Client;
 import com.timezone.www.repository.ClientRepository;
 import com.timezone.www.services.ClientService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Set;
 import java.util.TimeZone;
 
 @Service
+@Transactional
 public class ClientSDJpaService implements ClientService {
 
     private final ClientRepository clientRepository;

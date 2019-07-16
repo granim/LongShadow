@@ -6,6 +6,7 @@ import com.timezone.www.services.ClientService;
 import com.timezone.www.services.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -60,7 +61,7 @@ public class ClientController {
         if(client.getCompanyName() == null) {
             client.setCompanyName("");
         }
-        List<Client> clientsByUserId = clientService.findAllByUserId(user.getId());
+        List<Client> clientsByUserId = clientService.findAllByUserId(user.getid());
         List<Client> clientResults = clientService.findAllByCompanyNameLike("%" + client.getCompanyName() + "%");
         if(clientsByUserId.isEmpty()) {
             result.rejectValue("companyName", "notFound", "not found");
@@ -91,6 +92,7 @@ public class ClientController {
     }
 
     @PostMapping("/clients/new")
+    @Transactional
     public String processCreationForm(User user, @Valid Client client, BindingResult result, Model model){
         if(StringUtils.hasLength(client.getCompanyName()) && client.isNew() && user.getBaseClient(client.getCompanyName(), true) != null){
             result.rejectValue("companyName", "duplicate", "already exists");

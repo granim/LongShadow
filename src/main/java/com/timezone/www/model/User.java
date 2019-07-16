@@ -1,6 +1,7 @@
 package com.timezone.www.model;
 
 import lombok.Builder;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -13,7 +14,14 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     private Long id;
 
     private String userName;
@@ -32,6 +40,7 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     public Set<Client> clients = new HashSet<>();
 
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     public Set<Coworker> coworkers = new HashSet<>();
 
@@ -48,11 +57,11 @@ public class User {
         this.coworkers = coworkers;
     }
 
-    public Long getId() {
+    public Long getid() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setid(Long id) {
         this.id = id;
     }
 
