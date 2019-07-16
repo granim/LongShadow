@@ -5,7 +5,6 @@ import com.timezone.www.model.User;
 import com.timezone.www.services.CoworkerService;
 import com.timezone.www.services.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -92,14 +91,13 @@ public class CoworkerController {
         if (StringUtils.hasLength(coworker.getfName()) && coworker.isNew() && user.getCoworker(coworker.getfName(), true) != null){
             result.rejectValue("fName", "duplicate", "already exists");
         }
-        user.addCoworker(coworker);
+
         if(result.hasErrors()) {
             model.addAttribute("coworker", coworker);
             return VIEWS_COWORKER_CREATE_OR_UPDATE_FORM;
         } else {
-
-
             coworkerService.save(coworker);
+            user.addCoworker(coworker);
             return "redirect:/users/{userEmail}";
         }
     }

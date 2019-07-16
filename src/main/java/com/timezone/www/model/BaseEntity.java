@@ -25,7 +25,7 @@ public class BaseEntity {
     private Long id;
 
     public boolean isNew() {
-        return this.id == getId();
+        return this.id == null;
     }
 
     public Long getId() {
