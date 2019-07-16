@@ -26,6 +26,8 @@ public class ClientController {
     private final UserService userService;
     private final ClientService clientService;
 
+
+
     public ClientController(UserService userService, ClientService clientService) {
         this.userService = userService;
         this.clientService = clientService;
@@ -97,6 +99,7 @@ public class ClientController {
         if(StringUtils.hasLength(client.getCompanyName()) && client.isNew() && user.getBaseClient(client.getCompanyName(), true) != null){
             result.rejectValue("companyName", "duplicate", "already exists");
         }
+
         user.addClient(client);
         if(result.hasErrors()){
             model.addAttribute("client", client);

@@ -91,13 +91,15 @@ public class CoworkerController {
         if (StringUtils.hasLength(coworker.getfName()) && coworker.isNew() && user.getCoworker(coworker.getfName(), true) != null){
             result.rejectValue("fName", "duplicate", "already exists");
         }
-
+      //  User user1 =  new User();
+     //   user1.addCoworker(coworker);
+        user.addCoworker(coworker);
+    //  userService.save(user1);
         if(result.hasErrors()) {
             model.addAttribute("coworker", coworker);
             return VIEWS_COWORKER_CREATE_OR_UPDATE_FORM;
         } else {
             coworkerService.save(coworker);
-            user.addCoworker(coworker);
             return "redirect:/users/{userEmail}";
         }
     }

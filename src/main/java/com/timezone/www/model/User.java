@@ -8,15 +8,16 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Transactional
 public class User {
 
     @Id
     @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
+            strategy = GenerationType.AUTO,
+            generator = "native"
     )
     @GenericGenerator(
             name = "native",
@@ -45,7 +46,8 @@ public class User {
     public Set<Coworker> coworkers = new HashSet<>();
 
 
-    public User(){}
+    public User() {
+    }
 
     @Builder
     public User(String userName, String email, String password, Collection<Role> roles, Set<Client> clients, Set<Coworker> coworkers) {
@@ -113,27 +115,27 @@ public class User {
         this.roles = roles;
     }
 
-    protected Set<Client> getClientsInternal(){
-        if(this.clients == null) {
+    protected Set<Client> getClientsInternal() {
+        if (this.clients == null) {
             this.clients = new HashSet<>();
         }
         return this.clients;
     }
 
-    public void addClient(Client client){
-        if(client.isNew()){
+    public void addClient(Client client) {
+        if (client.isNew()) {
             getClientsInternal().add(client);
         }
         client.setUser(this);
     }
 
-    public Client getBaseClient(String name, boolean ignoreNew){
+    public Client getBaseClient(String name, boolean ignoreNew) {
         name = name.toLowerCase();
-        for(Client client : clients) {
-            if(!ignoreNew || !client.isNew()) {
+        for (Client client : clients) {
+            if (!ignoreNew || !client.isNew()) {
                 String compName = client.getCompanyName();
                 compName = compName.toLowerCase();
-                if(compName.equals(name)) {
+                if (compName.equals(name)) {
                     return client;
                 }
             }
@@ -141,19 +143,19 @@ public class User {
         return null;
     }
 
-    protected Set<Coworker> getCoworkersInternal(){
-        if(this.coworkers == null) {
+    protected Set<Coworker> getCoworkersInternal() {
+        if (this.coworkers == null) {
             this.coworkers = new HashSet<>();
         }
         return this.coworkers;
     }
 
-    protected void setCoworkersInternal(Set<Coworker> coworkers){
+    protected void setCoworkersInternal(Set<Coworker> coworkers) {
         this.coworkers = coworkers;
     }
 
-    public void addCoworker(Coworker coworker){
-        if(coworker.isNew()){
+    public void addCoworker(Coworker coworker) {
+        if (coworker.isNew()) {
             getCoworkersInternal().add(coworker);
         }
         coworker.setUser(this);
@@ -163,23 +165,19 @@ public class User {
         return getCoworker(name, false);
     }
 
-    public Coworker getCoworker(String name, boolean ignoreNew){
+    public Coworker getCoworker(String name, boolean ignoreNew) {
         name = name.toLowerCase();
-        for(Coworker coworker : coworkers) {
-            if(!ignoreNew || !coworker.isNew()) {
+        for (Coworker coworker : coworkers) {
+            if (!ignoreNew || !coworker.isNew()) {
                 String compName = coworker.getfName();
                 compName = compName.toLowerCase();
-                if(compName.equals(name)) {
+                if (compName.equals(name)) {
                     return coworker;
                 }
             }
         }
         return null;
     }
-
-
-
-
 
 
 

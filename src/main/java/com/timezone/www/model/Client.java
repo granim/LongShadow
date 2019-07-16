@@ -1,13 +1,11 @@
 package com.timezone.www.model;
 
 import lombok.Builder;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.TimeZone;
 
 @Entity
-@Table(name = "clients")
 public class Client extends BaseEntity {
 
     public Client(){}
@@ -33,9 +31,9 @@ public class Client extends BaseEntity {
     @Column(name = "timeZone")
     private TimeZone timeZone;
 
-    @ManyToOne
-    @JoinColumn(name = "user_Email")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_EMAIL")
+//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private User user;
 
     public User getUser() {

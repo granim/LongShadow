@@ -2,8 +2,8 @@ package com.timezone.www.bootstrap;
 
 import com.timezone.www.model.Client;
 import com.timezone.www.model.Coworker;
-import com.timezone.www.model.User;
 import com.timezone.www.model.Role;
+import com.timezone.www.model.User;
 import com.timezone.www.services.ClientService;
 import com.timezone.www.services.CoworkerService;
 import com.timezone.www.services.UserService;
@@ -48,7 +48,7 @@ public class DataLoader implements CommandLineRunner {
         Role role = new Role();
         role.setName("USER");
 
-
+        userService.save(grant);
         Client client1 = new Client();
         client1.setCompanyName("Telemundo");
         client1.setTelephone("123");
