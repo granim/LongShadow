@@ -52,7 +52,7 @@ public class Coworker {
     private String lName;
 
     @ManyToOne
-    @JoinColumn(name = "User_id")
+    @JoinColumn(name = "user_Email")
     private User user;
 
     public String getAddress() {

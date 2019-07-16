@@ -96,6 +96,8 @@ public class CoworkerController {
             model.addAttribute("coworker", coworker);
             return VIEWS_COWORKER_CREATE_OR_UPDATE_FORM;
         } else {
+
+
             coworkerService.save(coworker);
             return "redirect:/users/{userEmail}";
         }

@@ -34,7 +34,7 @@ public class Client extends BaseEntity {
     private TimeZone timeZone;
 
     @ManyToOne
-    @JoinColumn(name = "User_id")
+    @JoinColumn(name = "user_Email")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private User user;
 
