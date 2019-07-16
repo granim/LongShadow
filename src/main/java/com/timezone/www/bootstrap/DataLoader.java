@@ -59,7 +59,7 @@ public class DataLoader implements CommandLineRunner {
         clientService.save(client1);
         grant.addClient(client1);
 
-        Client client2 = new Client();
+        /*Client client2 = new Client();
         client1.setCompanyName("Telemundo 343");
         client1.setTelephone("123534545");
         client1.setCity("Tamps 342");
@@ -68,7 +68,7 @@ public class DataLoader implements CommandLineRunner {
         client1.setUser(grant);
         clientService.save(client2);
         grant.addClient(client2);
-
+*/
         Coworker james = new Coworker();
 
         james.setfName("James");

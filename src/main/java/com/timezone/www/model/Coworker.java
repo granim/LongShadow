@@ -1,7 +1,6 @@
 package com.timezone.www.model;
 
 import lombok.Builder;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -23,14 +22,7 @@ public class Coworker {
     }
 
     @Id
-    @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
-    )
-    @GenericGenerator(
-            name = "native",
-            strategy = "native"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public boolean isNew() {
@@ -60,7 +52,7 @@ public class Coworker {
     private String lName;
 
     @ManyToOne
-    @JoinColumn(name = "user_email")
+    @JoinColumn(name = "user_Email")
     private User user;
 
     public String getAddress() {
