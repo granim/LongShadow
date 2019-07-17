@@ -91,6 +91,7 @@ public class CoworkerController {
         if (StringUtils.hasLength(coworker.getfName()) && coworker.isNew() && user.getCoworker(coworker.getfName(), true) != null){
             result.rejectValue("fName", "duplicate", "already exists");
         }
+
       //  User user1 =  new User();
      //   user1.addCoworker(coworker);
         user.addCoworker(coworker);
