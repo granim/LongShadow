@@ -39,7 +39,8 @@ public class ClientController {
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User loggedUser = userService.findByEmail(user.getUsername());
         String loggedUserEmail = loggedUser.getEmail();
-        return userService.findByEmail(loggedUserEmail);
+        Long loggedUserId = loggedUser.getId();
+        return userService.findById(loggedUserId);
     }
 
     @InitBinder("user")
@@ -99,8 +100,12 @@ public class ClientController {
         if(StringUtils.hasLength(client.getCompanyName()) && client.isNew() && user.getBaseClient(client.getCompanyName(), true) != null){
             result.rejectValue("companyName", "duplicate", "already exists");
         }
-
+       org.springframework.security.core.userdetails.User loggedUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       User userCurrent = new User();
+        userCurrent = userService.findByEmail(loggedUser.getUsername());
+        user.setid(userCurrent.getId());
         user.addClient(client);
+
         if(result.hasErrors()){
             model.addAttribute("client", client);
             return VIEWS_CLIENT_CREATE_OR_UPDATE_FORM;
