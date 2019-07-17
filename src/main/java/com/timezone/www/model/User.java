@@ -59,7 +59,7 @@ public class User {
         this.coworkers = coworkers;
     }
 
-    public Long getid() {
+    public Long getId() {
         return id;
     }
 

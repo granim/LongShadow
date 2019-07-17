@@ -36,9 +36,7 @@ public class Coworker {
     public void setId(Long id) {
         this.id = id;
     }
-
-
-
+    
     @Column(name = "address")
     private String address;
     @Column(name = "city")

@@ -70,7 +70,7 @@ public class UserController {
         } else {
            org.springframework.security.core.userdetails.User loggedUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user1 = userService.findByEmail(loggedUser.getUsername());
-            Long id = user1.getid();
+            Long id = user1.getId();
         /*     User userToUpdate = userService.getOne(id);
            userToUpdate.setEmail(userEmail);
             userService.save(user);

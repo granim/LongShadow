@@ -63,7 +63,7 @@ public class ClientController {
         if(client.getCompanyName() == null) {
             client.setCompanyName("");
         }
-        List<Client> clientsByUserId = clientService.findAllByUserId(user.getid());
+        List<Client> clientsByUserId = clientService.findAllByUserId(user.getId());
         List<Client> clientResults = clientService.findAllByCompanyNameLike("%" + client.getCompanyName() + "%");
         if(clientsByUserId.isEmpty()) {
             result.rejectValue("companyName", "notFound", "not found");

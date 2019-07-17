@@ -57,9 +57,9 @@ public class CoworkerController {
         if(coworker.getlName() == null) {
             coworker.setlName("");
         }
-        List<Coworker> coworkersByUserId = coworkerService.findAllByUserId(user.getid());
+        List<Coworker> coworkersByUserId = coworkerService.findAllByUserId(user.getId());
         List<Coworker> coworkeresults = coworkerService.findAllBylNameLike("%" + coworker.getlName() + "%");
-        if(coworkeresults.isEmpty()) {
+        if(coworkersByUserId.isEmpty()) {
             result.rejectValue("lName", "notFound", "not found");
             return "coworkers/findCoworkers";
         } else if (coworkersByUserId.size() == 1) {
