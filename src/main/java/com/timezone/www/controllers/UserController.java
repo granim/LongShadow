@@ -19,7 +19,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
-    private static final String VIEWS_CUSTOMUSER_CREATE_OR_UPDATE_FORM = "/users/createOrUpdateUserForm";
+    private static final String VIEWS_CUSTOMUSER_CREATE_OR_UPDATE_FORM = "users/createOrUpdateUserForm";
 
     public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
