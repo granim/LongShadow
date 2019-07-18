@@ -36,7 +36,7 @@ public class CoworkerController {
     public User findBaseUser(@PathVariable("userEmail") String userEmail) {
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User loggedUser = userService.findByEmail(user.getUsername());
-    
+
         Long loggedUserId = loggedUser.getId();
         userIdToHold = loggedUserId;
         return userService.findById(loggedUserId);

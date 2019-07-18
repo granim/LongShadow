@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+<html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout (~{::body},'home')}">
 
 <head>
@@ -8,11 +8,14 @@
 </head>
 <body>
 <div class="container">
-<!--/*@thymesVar id="User" type="com.model.User"*/-->
 
 <h2>Hello</h2>
-<div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
-
+    <div><h4>Welcome to my Spring boot application. This app is built with spring boot, JPA, Hibernate,
+        Spring Security and is using a H2 in memory database. but also has configuration for a MySql database</h4>
+        <p>For the heroku deploy, anytime the app is restarted any information created will be destroyed.
+This app also has CRUD operations implemented at the moment with more features to be added asap. You can create an account and then add coworkers and clients.
+A view that will sort clients and or coworkers by their timezone will be implemented soon.</p>
+<p>A link to the git repo for this application is <a class="font-weight-bold btn"  href="https://github.com/granim/LongShadow">Here</a></p></div>
 
 </table>
 
