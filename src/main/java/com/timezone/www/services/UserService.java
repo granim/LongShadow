@@ -19,4 +19,5 @@ public interface UserService extends UserDetailsService {
     User update(User user);
 
     User getOne(Long Id);
+
 }

@@ -6,7 +6,6 @@ import com.timezone.www.services.ClientService;
 import com.timezone.www.services.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -25,7 +24,7 @@ public class ClientController {
     private static final String VIEWS_CLIENT_CREATE_OR_UPDATE_FORM = "clients/createOrUpdateClientForm.html";
     private final UserService userService;
     private final ClientService clientService;
-
+    private Long userIdToHold;
 
 
     public ClientController(UserService userService, ClientService clientService) {
@@ -40,6 +39,7 @@ public class ClientController {
         User loggedUser = userService.findByEmail(user.getUsername());
         String loggedUserEmail = loggedUser.getEmail();
         Long loggedUserId = loggedUser.getId();
+        userIdToHold = loggedUserId;
         return userService.findById(loggedUserId);
     }
 
@@ -65,7 +65,6 @@ public class ClientController {
             client.setCompanyName("");
         }
         List<Client> clientsByUserId = clientService.findAllByUserId(user.getId());
-        List<Client> clientResults = clientService.findAllByCompanyNameLike("%" + client.getCompanyName() + "%");
         if(clientsByUserId.isEmpty()) {
             result.rejectValue("companyName", "notFound", "not found");
             return "clients/findClients";
@@ -95,17 +94,14 @@ public class ClientController {
     }
 
     @PostMapping("/clients/new")
-    @Transactional
-    public String processCreationForm(User user, @Valid Client client, BindingResult result, Model model){
+    public String processCreationForm(User user, @Valid Client client, BindingResult result, Model model)  {
         if(StringUtils.hasLength(client.getCompanyName()) && client.isNew() && user.getBaseClient(client.getCompanyName(), true) != null){
             result.rejectValue("companyName", "duplicate", "already exists");
         }
-       org.springframework.security.core.userdetails.User loggedUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-       User userCurrent = new User();
-        userCurrent = userService.findByEmail(loggedUser.getUsername());
-        user.setid(userCurrent.getId());
-        user.addClient(client);
-
+       if(user.getId() == null) {
+           user.setid(userIdToHold);
+       }
+       user.addClient(client);
         if(result.hasErrors()){
             model.addAttribute("client", client);
             return VIEWS_CLIENT_CREATE_OR_UPDATE_FORM;

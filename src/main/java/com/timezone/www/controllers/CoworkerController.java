@@ -4,6 +4,7 @@ import com.timezone.www.model.Coworker;
 import com.timezone.www.model.User;
 import com.timezone.www.services.CoworkerService;
 import com.timezone.www.services.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -23,6 +24,7 @@ public class CoworkerController {
     private static final String VIEWS_COWORKER_CREATE_OR_UPDATE_FORM = "coworkers/createOrUpdateCoworkerForm";
     private final UserService userService;
     private final CoworkerService coworkerService;
+    private Long userIdToHold;
 
     public CoworkerController(UserService userService, CoworkerService coworkerService) {
         this.userService = userService;
@@ -32,7 +34,12 @@ public class CoworkerController {
 
     @ModelAttribute("user")
     public User findBaseUser(@PathVariable("userEmail") String userEmail) {
-        return userService.findByEmail(userEmail);
+        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loggedUser = userService.findByEmail(user.getUsername());
+    
+        Long loggedUserId = loggedUser.getId();
+        userIdToHold = loggedUserId;
+        return userService.findById(loggedUserId);
     }
 
     @InitBinder("user")
@@ -50,6 +57,7 @@ public class CoworkerController {
     public String findCoworker(Model model){
         model.addAttribute("coworker", Coworker.builder().build());
         return  "coworkers/findCoworkers";
+
     }
 
     @GetMapping("/coworkers")
@@ -58,7 +66,6 @@ public class CoworkerController {
             coworker.setlName("");
         }
         List<Coworker> coworkersByUserId = coworkerService.findAllByUserId(user.getId());
-        List<Coworker> coworkeresults = coworkerService.findAllBylNameLike("%" + coworker.getlName() + "%");
         if(coworkersByUserId.isEmpty()) {
             result.rejectValue("lName", "notFound", "not found");
             return "coworkers/findCoworkers";
@@ -92,10 +99,10 @@ public class CoworkerController {
             result.rejectValue("fName", "duplicate", "already exists");
         }
 
-      //  User user1 =  new User();
-     //   user1.addCoworker(coworker);
+        if(user.getId() == null) {
+            user.setid(userIdToHold);
+        }
         user.addCoworker(coworker);
-    //  userService.save(user1);
         if(result.hasErrors()) {
             model.addAttribute("coworker", coworker);
             return VIEWS_COWORKER_CREATE_OR_UPDATE_FORM;

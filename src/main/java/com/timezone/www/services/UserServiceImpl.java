@@ -1,8 +1,8 @@
 package com.timezone.www.services;
 
 import com.timezone.www.dto.UserRegistrationDto;
-import com.timezone.www.model.User;
 import com.timezone.www.model.Role;
+import com.timezone.www.model.User;
 import com.timezone.www.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
