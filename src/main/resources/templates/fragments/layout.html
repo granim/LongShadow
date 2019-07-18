@@ -43,15 +43,15 @@
                       <span>Home</span>
                   </li>
                   <li class="nav-item">
-                      <a  th:href=" @{'/users/' + |${#authentication.name}/edit|}" class="text-left nav-link">My Information</a>
+                      <a sec:authorize="isAuthenticated()" th:href=" @{'/users/' + |${#authentication.name}/edit|}" class="text-left nav-link">My Information</a>
                       <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                   </li>
                   <li class="nav-item">
-                      <a th:href=" @{'/users/' + |${#authentication.name}/coworkers/find|}" class="text-left nav-link">My Coworkers</a>
+                      <a sec:authorize="isAuthenticated()" th:href=" @{'/users/' + |${#authentication.name}/coworkers/find|}" class="text-left nav-link">My Coworkers</a>
                       <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                   </li>
                   <li class="nav-item">
-                      <a th:href=" @{'/users/' + |${#authentication.name}/clients/find|}" class="text-left nav-link">My Clients</a>
+                      <a sec:authorize="isAuthenticated()" th:href=" @{'/users/' + |${#authentication.name}/clients/find|}" class="text-left nav-link">My Clients</a>
                       <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                   </li>
                   <li class="nav-item" sec:authorize="hasRole('ADMIN')" th:replace="::menuItem ('/oups','error','trigger a RuntimeException to see how it is handled','warning-sign','Error')">
